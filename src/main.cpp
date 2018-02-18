@@ -1,17 +1,15 @@
+//INCLUDES
 #include <WiFi.h>
 #include <WiFiMulti.h>
 #include <ESPmDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-
 #include <PS4BT.h>
 #include <usbhub.h>
-
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
-
 #include <CytronMD10.h>
 #include <RC_ESC.h>
 
@@ -21,44 +19,58 @@
 #endif
 #include <SPI.h>
 
-WiFiMulti wifiMulti;
 
+//PIN Declarations
+const int _LeftEnc0 = 36;
+const int _LeftEnc1 = 35;
+const int _RightEnc0 = 32;
+const int _RightEnc1 = 33;
+const int _LiftEnc0 = 39;
+const int _LiftEnc1 = 34;
+const int _LEDRing = 25;
+const int _LiftPWM = 12;
+const int _Acc1PWM = 27;
+const int _Acc2PWM = 14;
+
+const int _LeftPWM = 9;
+const int _LeftDIR = 13;
+const int _RightPWM = 11;
+const int _RightDIR = 10;
+
+const int _Button0 = 0;
+const int _LEDBuiltIn = 2;
+
+//Public Declarations
+WiFiMulti wifiMulti;
 USB Usb;
 //USBHub Hub1(&Usb); // Some dongles have a hub inside
 BTD Btd(&Usb); // You have to create the Bluetooth Dongle instance like so
-
-/* You can create the instance of the PS4BT class in two ways */
-// This will start an inquiry and then pair with the PS4 controller - you only have to do this once
-// You will need to hold down the PS and Share button at the same time, the PS4 controller will then start to blink rapidly indicating that it is in pairing mode
 //PS4BT PS4(&Btd, PAIR);
-
-// After that you can simply create the instance like so and then press the PS button on the device
 PS4BT PS4(&Btd);
-
-//CytronMD10 LIFT(0, 27, 14, false);
-CytronMD10 DriveRight(7, 32, 33, false);
-CytronMD10 DriveLeft(6, 25, 26, true);
-RC_ESC Lift(0, 27, true);
-
+CytronMD10 DriveRight(7, _LeftPWM, _LeftDIR, false);
+CytronMD10 DriveLeft(6, _RightPWM, _RightDIR, true);
+RC_ESC Lift(0, _LiftPWM, true);
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
+//Satisfy Compiler
 void timerLoop();
 void WriteRobot();
 void Task();
 void ReadController();
 void SetupOTA();
 
+//State Variables
 float LeftJoystickY;
 float LeftJoystickX;
 float RightJoystickY;
 float RightJoystickX;
 float TriggerAggregate;
-
 float DriveRightSpeed;
 float DriveLeftSpeed;
 float MOGOSpeed;
-
 float isArcadeDrive;
+
+
 
 void setup()
 {
@@ -116,8 +128,8 @@ void setup()
 
 	bno.setExtCrystalUse(true);
 
-	pinMode(2, OUTPUT);
-	digitalWrite(2, HIGH);
+	pinMode(LED_BUILTIN, OUTPUT);
+	digitalWrite(LED_BUILTIN, HIGH);
 }
 
 unsigned long lastRun20 = millis();
