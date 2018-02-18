@@ -12,12 +12,8 @@
 #include <utility/imumaths.h>
 #include <CytronMD10.h>
 #include <RC_ESC.h>
-
-// Satisfy the IDE, which needs to see the include statment in the ino too.
-#ifdef dobogusinclude
-#include <spi4teensy3.h>
-#endif
 #include <SPI.h>
+#include <Encoder.h>
 
 
 //PIN Declarations
@@ -42,14 +38,19 @@ const int _LEDBuiltIn = 2;
 
 //Public Declarations
 WiFiMulti wifiMulti;
-USB Usb;
-//USBHub Hub1(&Usb); // Some dongles have a hub inside
+
+USB Usb; //USBHub Hub1(&Usb); // Some dongles have a hub inside
 BTD Btd(&Usb); // You have to create the Bluetooth Dongle instance like so
-//PS4BT PS4(&Btd, PAIR);
-PS4BT PS4(&Btd);
+PS4BT PS4(&Btd);  //PS4BT PS4(&Btd, PAIR);
+
 CytronMD10 DriveRight(7, _LeftPWM, _LeftDIR, false);
 CytronMD10 DriveLeft(6, _RightPWM, _RightDIR, true);
 RC_ESC Lift(0, _LiftPWM, true);
+
+Encoder RightEnc(_RightEnc0, _RightEnc1);
+Encoder LeftEnc(_LeftEnc0, _LeftEnc1);
+Encoder LiftEnc(_LiftEnc0, _LiftEnc1);
+
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 //Satisfy Compiler
