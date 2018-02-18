@@ -18,7 +18,7 @@
 
 //PIN Declarations
 const int _LeftEnc0 = 36;
-const int _LeftEnc1 = 35;
+const int _LeftEnc1 = 35; 
 const int _RightEnc0 = 32;
 const int _RightEnc1 = 33;
 const int _LiftEnc0 = 39;
