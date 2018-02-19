@@ -5,9 +5,5 @@
     },
     "files.associations": {
         "cstdlib": "cpp"
-    },
-    "terminal.integrated.env.osx": {
-        "PATH": "/Users/yetibotics/.platformio/penv/bin:/Users/yetibotics/.platformio/penv:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public",
-        "PLATFORMIO_CALLER": "vscode"
     }
 }
