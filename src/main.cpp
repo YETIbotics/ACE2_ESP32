@@ -13,7 +13,7 @@
 #include <CytronMD10.h>
 #include <RC_ESC.h>
 #include <SPI.h>
-#include <Encoder.h>
+//#include <Encoder.h>
 
 
 //PIN Declarations
@@ -47,9 +47,9 @@ CytronMD10 DriveRight(7, _LeftPWM, _LeftDIR, false);
 CytronMD10 DriveLeft(6, _RightPWM, _RightDIR, true);
 RC_ESC Lift(0, _LiftPWM, true);
 
-Encoder RightEnc(_RightEnc0, _RightEnc1);
-Encoder LeftEnc(_LeftEnc0, _LeftEnc1);
-Encoder LiftEnc(_LiftEnc0, _LiftEnc1);
+//Encoder RightEnc(_RightEnc0, _RightEnc1);
+//Encoder LeftEnc(_LeftEnc0, _LeftEnc1);
+//Encoder LiftEnc(_LiftEnc0, _LiftEnc1);
 
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
@@ -76,7 +76,7 @@ float isArcadeDrive;
 void setup()
 {
 	Serial.begin(115200);
-
+Serial.println("BEGIN");
 	//pinMode(14, INPUT_PULLUP);
 	//pinMode(12, INPUT_PULLUP);
 	//pinMode(15, INPUT_PULLUP);
@@ -99,11 +99,14 @@ void setup()
 		while (1)
 			; //halt
 	}
+	
+Serial.println("USB DONE");
 
 	wifiMulti.addAP("RoboticHuskies", "robotsrule");
 	wifiMulti.addAP("NBS", "N3metr12");
 	wifiMulti.addAP("FreePublicWIFI", "");
 	wifiMulti.run();
+Serial.println("WIFI DONE");
 
 	// Serial.println("Connecting Wifi...");
 	// if(wifiMulti.run() == WL_CONNECTED) {
@@ -116,6 +119,7 @@ void setup()
 	//t.setInterval(20, timerLoop);
 
 	SetupOTA();
+Serial.println("OTA DONE");
 
 	if (!bno.begin())
 	{
@@ -124,13 +128,16 @@ void setup()
 		while (1)
 			;
 	}
+	
+Serial.println("GYRO pt 1 done");
 
 	delay(1000);
 
 	bno.setExtCrystalUse(true);
+Serial.println("GYRP pt 2 done");
 
-	pinMode(LED_BUILTIN, OUTPUT);
-	digitalWrite(LED_BUILTIN, HIGH);
+	pinMode(2, OUTPUT);
+	digitalWrite(2, HIGH);
 }
 
 unsigned long lastRun20 = millis();
