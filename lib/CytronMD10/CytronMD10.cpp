@@ -8,11 +8,7 @@ CytronMD10::CytronMD10(int channel, int pinpwm, int pindir, bool reversed) {
 	_reverse = reversed;
 	_channel = channel;
 
-	pinMode(_pinDIR, OUTPUT);
-	pinMode(_pinPWM, OUTPUT);
-
-  	ledcSetup(_channel, 20000, 8);
-	ledcAttachPin(_pinPWM, _channel);
+	
 }
 
 void CytronMD10::SetMotorSpeed(float speed) {
@@ -26,6 +22,14 @@ void CytronMD10::SetMotorSpeed(float speed) {
 
 	digitalWrite(_pinDIR, dir);
 	ledcWrite(_channel, abs(speed));
+}
+
+void CytronMD10::Init(){
+	pinMode(_pinDIR, OUTPUT);
+	pinMode(_pinPWM, OUTPUT);
+
+  	ledcSetup(_channel, 20000, 8);
+	ledcAttachPin(_pinPWM, _channel);
 }
 
 
